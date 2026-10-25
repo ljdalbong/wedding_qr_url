@@ -1,0 +1,80 @@
+ @font-face{font-family:WeddingSerif;src:url("assets/fonts/serif.woff2") format("woff2");font-display:swap}*{box-sizing:border-box}html{background:#fff;color:#191919}body{margin:0;font-family:WeddingSerif,"Nanum Myeongjo",serif}.page{width:min(100%,440px);margin:0 auto;background:#fff}.cover{position:relative;aspect-ratio:347/380;overflow:hidden}.cover-photo{width:100%;height:100%;object-fit:cover;object-position:50% 44%;display:block}.cover:after{content:"";position:absolute;bottom:0;left:0;right:0;height:24%;background:linear-gradient(to bottom,rgba(255,255,255,0),rgba(255,255,255,.55) 57%,#fff);pointer-events:none}.lettering{position:absolute;width:79%;left:10.5%;bottom:8.5%;height:auto;overflow:visible;opacity:var(--lettering-opacity, .7);z-index:1;object-fit:contain;pointer-events:none}.intro{text-align:center;padding:16px 10px 17px}.eyebrow{letter-spacing:.29em;font-size:10px;margin:0 0 13px}.names{font-size:20px;letter-spacing:.09em;white-space:nowrap;margin:0 0 12px;line-height:1.4}.heart{display:inline-block;padding:0 11px;font-size:17px;letter-spacing:0}.event-line,.hall-line{font-size:12px;line-height:1.65;white-space:nowrap;margin:0;letter-spacing:-.025em}.rule{margin:0 7%;height:1px;background:#e5e5e5}.calendar-section{text-align:center;padding:15px 9% 18px}.month{margin:0 0 15px;display:flex;justify-content:space-between;align-items:center;font-size:19px}.month .arrow{font-size:21px;color:#5b5b5b}.calendar-grid{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));row-gap:3px;align-items:center}.weekday{font-size:10px;padding-bottom:3px}.day{font-size:11px;min-height:24px;display:grid;place-items:center}.day.empty{visibility:hidden}.wedding-date{width:28px;height:28px;min-height:28px;border-radius:50%;background:#191919;color:white;justify-self:center}.secondary{margin:15px auto 0;display:flex;align-items:center;justify-content:center;gap:9px;width:min(100%,266px);min-height:43px;border:1px solid #d8d8d8;border-radius:24px;padding:8px 15px;background:white;color:#202020;font-family:inherit;font-size:12px}.secondary .calendar-icon{width:19px;height:19px;flex:none}.secondary .chevron{font-family:Arial,sans-serif;font-size:20px;margin-left:auto;line-height:1}.secondary .button-label{margin-left:auto}.secondary:disabled{opacity:1;color:#222;cursor:default}.location{text-align:center;padding:18px 22px 35px}.location h2{font-size:11px;letter-spacing:.26em;font-weight:400}.location p{font-size:15px;margin:13px 0 5px}.location address{font-style:normal;font-size:12px;color:#555}.dday{font-size:12px;letter-spacing:.08em;margin:19px 0 0}.dday strong{font-weight:400}.calendar-popup[hidden]{display:none!important}.calendar-popup{position:fixed;inset:0;background:rgba(0,0,0,.32);z-index:20;display:grid;place-items:center;padding:18px}.popup-panel{width:min(100%,340px);background:#fff;border-radius:16px;box-shadow:0 12px 36px #0002;padding:17px 15px 18px}.popup-head{display:flex;justify-content:center;position:relative;align-items:center;font:14px/1.5 WeddingSerif,serif;margin-bottom:13px}.close-popup{position:absolute;right:0;top:-4px;border:0;background:transparent;font:24px/1 Arial,sans-serif;cursor:pointer}.calendar-choice{display:flex;align-items:center;gap:15px;width:100%;min-height:51px;border:1px solid #ececec;border-radius:10px;background:#fff;padding:8px 13px;text-decoration:none;color:#222;font-size:12px;margin-bottom:5px;text-align:left;font-family:inherit;cursor:pointer}.calendar-choice .choice-icon{width:26px;text-align:center;font:700 23px/1 Arial,sans-serif}.calendar-choice .choice-label{flex:1}.calendar-choice .choice-chevron{font:18px/1 Arial,sans-serif}.calendar-choice:hover{background:#fafafa}.secondary:not(:disabled){cursor:pointer}.location address{line-height:1.7}.status-note{font:12px/1.6 system-ui,sans-serif;color:#666;margin:18px auto;max-width:360px;padding:0 18px;text-align:center}@media(max-width:360px){.names{font-size:18px}.event-line,.hall-line{font-size:11px}}
+
+/* P20: unified whitespace rhythm — approved proportions retained. */
+:root{--gap-line:8px;--gap-item:14px;--gap-block:24px;--gap-section:32px}
+/* Important: keep cover crop, lettering, and square calendar/map geometry unchanged. */
+.intro{padding-top:22px!important;padding-bottom:26px!important}
+.intro .eyebrow{margin-bottom:18px!important}
+.intro .names{margin-bottom:17px!important}
+.intro .event-line,.intro .hall-line{line-height:1.85!important}
+.intro .hall-line{margin-top:5px!important}
+.calendar-section{padding-top:23px!important;padding-bottom:28px!important}
+.calendar-section .month{margin-bottom:21px!important}
+/* Keep the calendar-grid square, only change its surrounding whitespace. */
+.calendar-grid{aspect-ratio:1 / 1!important}
+.calendar-chooser{margin-top:21px!important}
+.calendar-chooser>.secondary,.calendar-chooser>summary.secondary{margin-top:20px!important}
+.calendar-chooser .native-choice-panel{margin-top:14px!important;padding-top:16px!important;padding-bottom:17px!important}
+.calendar-choice{margin-bottom:9px!important}
+.dday{margin-top:23px!important;margin-bottom:8px!important}
+.location{padding-top:28px!important;padding-bottom:38px!important}
+.location h2{margin-top:0!important;margin-bottom:19px!important}
+.location>p{margin-top:0!important;margin-bottom:9px!important}
+.location address{line-height:1.85!important}
+.location .map-outer{margin-top:23px!important}
+/* Do not alter the map width, height, aspect ratio or iframe fit. */
+.location .map-credit{margin-top:7px!important;margin-bottom:13px!important}
+.location .map-apps{margin-top:16px!important}
+.location .map-apps>a{gap:11px!important}
+.gallery-section{padding-top:27px!important;padding-bottom:33px!important}
+.gallery-section h2{margin-bottom:23px!important}
+.gallery-dots{margin-top:17px!important}
+.contribution{padding-top:28px!important;padding-bottom:38px!important}
+.contribution-toggle{min-height:49px!important}
+.contribution-panel{margin-top:18px!important;padding:18px 16px 19px!important}
+.contribution-tabs{margin-bottom:16px!important}
+.contribution-tabs .contribution-tab{min-height:45px!important}
+.account-row{padding-top:16px!important;padding-bottom:16px!important;gap:14px!important}
+.account-row .account-text{gap:9px!important}
+.account-row .account-first-line{line-height:1.8!important}
+.account-row .account-holder{line-height:1.8!important}
+.contribution-note{margin-top:20px!important;line-height:2!important}
+@media(max-width:359px){.intro{padding-inline:8px!important}.calendar-section{padding-inline:8%!important}.account-row{gap:8px!important}}
+
+/* P20 map feature: confined to approved square map only. */
+.map-frame .map-static,.map-frame #interactive-map{position:absolute;inset:0;width:100%;height:100%;display:block}
+.map-frame .map-static{object-fit:cover;z-index:1}
+.map-frame #interactive-map{z-index:2;visibility:hidden}
+.map-frame.map-live #interactive-map{visibility:visible}
+.map-frame .map-zoom-controls{position:absolute;right:11px;top:11px;z-index:500;display:flex;flex-direction:column;gap:5px}
+.map-frame .map-zoom-controls button{display:grid;place-items:center;border:1px solid #ddd;border-radius:5px;width:35px;height:35px;background:#fff;color:#222;font:24px/1 Arial,sans-serif;cursor:pointer;box-shadow:0 1px 4px #0001}
+.map-frame .map-zoom-controls button:disabled{opacity:.45}
+.map-frame .map-attribution{position:absolute;z-index:501;bottom:0;right:0;font:9px/1.6 Arial,sans-serif;color:#666;background:#ffffffcf;padding:0 5px}
+.map-frame .leaflet-control-attribution{display:none!important}
+.map-frame .leaflet-container{background:#f5f5f5;font-family:Arial,sans-serif}
+.map-frame .leaflet-marker-icon{filter:none}
+
+/* P20 follow-up: hide inoperable map controls in offline fallback. */
+.map-frame:not(.map-live) .map-zoom-controls{display:none}
+.map-frame:not(.map-live) .map-attribution{display:none}
+.map-frame.map-live .map-zoom-controls{display:flex}
+
+/* A25: QR 인쇄물과 조화되는 차분한 올리브 녹색. 기존 자산과 타이포그래피는 유지합니다. */
+:root{--wedding-accent:#6c7651;--wedding-sun:#ad7374;--wedding-sat:#596985}
+.heart{color:var(--wedding-accent)!important}
+.calendar-grid .wedding-date{background:var(--wedding-accent)!important;color:#fff!important}
+.calendar-grid .weekday:first-child{color:var(--wedding-sun)!important}
+.calendar-grid .weekday:nth-child(7){color:var(--wedding-sat)!important}
+/* 일정 등록: 글자만 가운데 놓고 선택 상태에서 흰 글씨, 녹색 배경 */
+.calendar-chooser>summary.secondary{display:flex!important;justify-content:center!important;align-items:center!important;text-align:center!important}
+.calendar-chooser>summary.secondary .button-label{margin:0!important;display:block;flex:0 1 auto}
+.calendar-chooser[open]>summary.secondary{background:var(--wedding-accent)!important;color:#fff!important;border-color:var(--wedding-accent)!important}
+.native-choice-panel .calendar-choice{justify-content:center!important;text-align:center!important}
+.native-choice-panel .calendar-choice .choice-label{flex:none!important;text-align:center!important}
+/* 기존 버튼과 같은 최대 너비 266px 및 높이 43px */
+.contribution-toggle{box-sizing:border-box!important;width:min(100%,266px)!important;min-height:43px!important;margin:0 auto!important;position:relative!important;display:flex!important;justify-content:center!important;align-items:center!important;text-align:center!important}
+.contribution-toggle .toggle-chevron{display:none!important}
+.contribution details[open]>.contribution-toggle{background:var(--wedding-accent)!important;color:#fff!important;border-color:var(--wedding-accent)!important}
+/* 지도 표지는 식별하기 쉽도록 하며 지도 데이터 공급자 표기는 유지합니다. */
+.map-frame .venue-map-caption{position:absolute;z-index:710;bottom:11px;left:50%;transform:translateX(-50%);white-space:nowrap;padding:6px 10px;border-radius:20px;background:rgba(255,255,255,.93);box-shadow:0 1px 7px #0002;font:11px/1.4 WeddingSerif,serif;pointer-events:none;color:#273321}
+.map-frame .leaflet-tile-pane{filter:saturate(.72) contrast(.98)}
