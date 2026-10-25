@@ -11,6 +11,10 @@
     {
       "src": "assets/gallery/photo-03.jpg",
       "alt": "갤러리 사진 3"
+    },
+    {
+      "src": "assets/gallery/P20210408_031801199_D7C30E16-92FD-4B62-ACEC-90FD9E828F71.jpeg"
+      "alt" : "갤러리 사진4"
     }
-  ]
+    ]
 }
