@@ -1,0 +1,30 @@
+<!doctype html>
+<html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="robots" content="noindex,nofollow">
+<title>P20 HTTPS 기능 진단 (정식 청첩장 아님)</title>
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
+<style>body{font-family:system-ui,sans-serif;max-width:520px;margin:auto;padding:24px;line-height:1.6}h1{font-size:20px}#map{width:100%;aspect-ratio:1;background:#f3f3f3}#log{white-space:pre-wrap;background:#f6f6f6;padding:12px;border-radius:8px}a{display:inline-block;margin:8px 0}small{color:#666}.warning{background:#fff1e4;padding:12px;border-radius:8px}</style></head>
+<body><h1>P20 HTTPS 기능 진단</h1>
+<p class="warning"><strong>테스트 전용 페이지</strong>입니다. 사용자 확정 청첩장 디자인 및 전체 기능의 배포본이 아닙니다. 아래 좌표는 검증되지 않은 근삿값입니다.</p>
+<p>실제 iPhone Safari에서 지도 타일 수신·확대·축소·드래그·핀치, ICS 링크 반응을 확인하는 용도입니다.</p>
+<div id="map" aria-label="지도 로딩 진단"></div>
+<p><a href="wedding-20261128.ics">Apple·기타 캘린더 (.ics) 동작 확인</a></p>
+<p><a href="../">기존 공개 메인으로 돌아가기</a></p>
+<h2>환경·이벤트 결과</h2><pre id="log">JavaScript 실행 대기</pre>
+<small>지도 © OpenStreetMap contributors / Leaflet. 이 페이지의 CDN 의존성은 네트워크 접속 경로를 진단하려는 목적이며, 정식 청첩장에 그대로 사용하지 않습니다.</small>
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<script>
+(function(){
+const box=document.getElementById('log');const messages=[];
+function report(s){messages.push(new Date().toLocaleTimeString()+' '+s);box.textContent=messages.join('\n');}
+report('HTTPS: '+(location.protocol==='https:'));report('Leaflet 로딩: '+(typeof L!=='undefined'));report('User Agent: '+navigator.userAgent);
+if(typeof L==='undefined'){report('실패: Leaflet CDN 불러오기 실패');return;}
+const map=L.map('map',{zoomControl:true}).setView([36.6863283393705,127.510974315734],17);
+const tiles=L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png',{maxZoom:19,attribution:'© OpenStreetMap contributors'}).addTo(map);
+let count=0,errors=0;
+tiles.on('tileload',()=>{count++;if(count===1)report('실제 OSM 타일 수신 시작');});
+tiles.on('tileerror',()=>{errors++;if(errors<=3)report('OSM 타일 오류 '+errors);});
+map.on('zoomend',()=>report('확대/축소: zoom='+map.getZoom()));
+map.on('moveend',()=>report('지도 이동: '+map.getCenter().lat.toFixed(5)+','+map.getCenter().lng.toFixed(5)));
+setTimeout(()=>report('8초 결과: 성공 타일 '+count+'개 / 오류 '+errors+'개'),8000);
+})();
+</script></body></html>
