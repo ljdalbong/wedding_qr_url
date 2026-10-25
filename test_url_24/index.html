@@ -130,7 +130,7 @@
 (function(){
  try { var e=document.getElementById('dday');if(!e)return;var t=e.getAttribute('data-target');var now=new Date();var parts=new Intl.DateTimeFormat('en-CA',{timeZone:'Asia/Seoul',year:'numeric',month:'2-digit',day:'2-digit'}).formatToParts(now);var o={};parts.forEach(function(p){o[p.type]=p.value});var today=Date.UTC(+o.year,+o.month-1,+o.day);var x=t.split('-');var target=Date.UTC(+x[0],+x[1]-1,+x[2]);var n=Math.round((target-today)/86400000);e.textContent=n>0?'D - '+n:n===0?'D - DAY':'D + '+Math.abs(n); }catch(e){}
 })();
-</script><script>/* 기존 3장 고정 갤러리 점 동기화는 동적 갤러리 스크립트로 대체. */</script><script id="account-config" type="application/json">{"groom": [{"bank": "", "number": "", "holder": ""}, {"bank": "", "number": "", "holder": ""}, {"bank": "", "number": "", "holder": ""}], "bride": [{"bank": "", "number": "", "holder": ""}]}</script><script>(function(){'use strict';
+</script><script>/* 기존 3장 고정 갤러리 점 동기화는 동적 갤러리 스크립트로 대체. */</script><script id="account-config" type="application/json">{"groom": [{"bank": "카카오뱅크", "number": "333338473829473", "holder": "크리미"}, {"bank": "", "number": "", "holder": ""}, {"bank": "국민은행", "number": "3626-3639482-7383", "holder": "크리미엄마"}], "bride": [{"bank": "농협은행", "number": "983738392", "holder": "애옹이"}]}</script><script>(function(){'use strict';
 const rows=[...document.querySelectorAll('.account-row[data-account-side]')];
 const live=document.querySelector('.copy-status');
 function say(message){if(live)live.textContent=message;}
