@@ -1,0 +1,16 @@
+{
+  "photos": [
+    {
+      "src": "assets/gallery/photo-01.jpg",
+      "alt": "갤러리 사진 1"
+    },
+    {
+      "src": "assets/gallery/photo-02.jpg",
+      "alt": "갤러리 사진 2"
+    },
+    {
+      "src": "assets/gallery/photo-03.jpg",
+      "alt": "갤러리 사진 3"
+    }
+  ]
+}
