@@ -1,0 +1,72 @@
+# 목적: 현재 청첩장 표지를 공유용 작은 이미지로 자동 생성합니다.
+# 기능: cover-config.json의 사진을 읽고 1200x630 JPEG로 축소하며 OG 이미지 캐시 버전을 동기화합니다.
+# 변경 범위: assets/social-cover.jpg 및 index.html의 OG 이미지 URL 버전값만 변경합니다.
+# 영향: 일반 페이지 표지·갤러리·캘린더·지도 디자인에는 영향을 주지 않습니다.
+# 보안: 외부 인증정보를 사용하지 않고 GitHub Actions 기본 토큰에만 쓰기 권한을 부여합니다.
+# 복구: 자동 생성 커밋을 되돌리거나 이 워크플로를 비활성화합니다.
+name: Build share preview from current cover
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - cover-config.json
+      - assets/cover*
+      - .github/workflows/share-cover.yml
+permissions:
+  contents: write
+jobs:
+  thumbnail:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Install Pillow
+        run: python -m pip install 'Pillow>=11,<13'
+      - name: Generate social-cover.jpg and update OG cache version
+        shell: bash
+        run: |
+          python - <<'PY'
+          # 기준 사진의 실제 픽셀만 사용해 외부 서비스 없이 공유용 썸네일을 만듭니다.
+          import json, pathlib, hashlib, re
+          from PIL import Image, ImageOps
+          root = pathlib.Path('.').resolve()
+          cfg = json.loads(pathlib.Path('cover-config.json').read_text(encoding='utf-8'))
+          path = (root / cfg['coverImage']).resolve()
+          if not path.is_relative_to(root / 'assets') or not path.is_file():
+              raise SystemExit('Invalid cover image path')
+          source = path.read_bytes()
+          tag = hashlib.sha256(source).hexdigest()[:12]
+          with Image.open(path) as im:
+              im = ImageOps.exif_transpose(im).convert('RGB')
+              im.thumbnail((1200, 630), Image.Resampling.LANCZOS)
+              canvas = Image.new('RGB', (1200, 630), '#f5f3ef')
+              canvas.paste(im, ((1200-im.width)//2, (630-im.height)//2))
+              dst = root / 'assets/social-cover.jpg'
+              canvas.save(dst, format='JPEG', quality=85, optimize=True, progressive=True)
+          page = root / 'index.html'
+          html = page.read_text(encoding='utf-8')
+          url = 'https://ljdalbong.github.io/wedding_qr_url/assets/social-cover.jpg?v=' + tag
+          for attr in ('property="og:image"', 'name="twitter:image"'):
+              pattern = r'(<meta ' + re.escape(attr) + r' content=")[^"]*(")'
+              html, found = re.subn(pattern, lambda m: m.group(1)+url+m.group(2), html, count=1)
+              if found != 1:
+                  print('Social meta not added yet:', attr)
+          page.write_text(html, encoding='utf-8')
+          print('Source:', cfg['coverImage'], 'preview bytes:', dst.stat().st_size, 'version:', tag)
+          PY
+      - name: Commit generated assets only if changed
+        shell: bash
+        run: |
+          # 공유용 사진과 OG 버전만 커밋하고 다른 소스는 수정하지 않습니다.
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add assets/social-cover.jpg index.html
+          if ! git diff --cached --quiet; then
+            git commit -m "Update social preview for current wedding cover"
+            git push
+          fi
