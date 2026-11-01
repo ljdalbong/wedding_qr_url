@@ -1,16 +1,22 @@
+---
+layout: null
+---
 {
   "photos": [
-    {
-      "src": "assets/gallery/001.JPG",
-      "alt": "갤러리 사진 001"
-    },
-    {
-      "src": "assets/gallery/002.JPG",
-      "alt": "갤러리 사진 002"
-    },
-    {
-      "src": "assets/gallery/003.JPG",
-      "alt": "갤러리 사진 003"
-    }
+    {% assign picture_list = site.static_files | sort: 'path' %}
+    {% assign comma = '' %}
+    {% for picture in picture_list %}
+      {% assign parts = picture.name | split: '.' %}
+      {% assign stem = parts | first %}
+      {% assign extension = picture.extname | downcase %}
+      {% assign folder = picture.path | remove: picture.name %}
+      {% assign n = stem | plus: 0 %}
+      {% if folder == '/assets/gallery/' and stem.size == 3 and n >= 1 and n <= 99 %}
+        {% if extension == '.jpg' or extension == '.jpeg' or extension == '.png' or extension == '.webp' %}
+          {{ comma }}{"src":"assets/gallery/{{ picture.name }}","alt":"갤러리 사진 {{ stem }}"}
+          {% assign comma = ',' %}
+        {% endif %}
+      {% endif %}
+    {% endfor %}
   ]
 }
