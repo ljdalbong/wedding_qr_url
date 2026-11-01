@@ -1,0 +1,8 @@
+{
+  "coverImage": "assets/cover1.JPG",
+  "coverImages": [
+    "assets/cover1.JPG",
+    "assets/cover2.JPG"
+  ],
+  "selection": "random_no_immediate_repeat"
+}

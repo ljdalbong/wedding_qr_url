@@ -1,0 +1,52 @@
+---
+layout: null
+---
+{%- comment -%}
+목적: GitHub 갤러리 파일명만 조회하여 JSON 사진 목록을 자동 생성합니다.
+기능: 001~099 및 005_1, 005_2, 005_10처럼 중간 삽입을 허용합니다.
+정렬: 기본 번호 3자리 + 보조 번호 8자리로 0을 채운 문자열을 정렬합니다.
+허용 확장자: JPG/JPEG/PNG/WEBP (대소문자 무관). 파일 원본 내용은 열지 않습니다.
+주의: 동일 번호+보조 번호에 여러 확장자가 존재하면 중복 표시되므로 업로드 시 중복을 피해야 합니다.
+{%- endcomment -%}
+{%- assign serialized = '' -%}
+{%- for photo in site.static_files -%}
+  {%- assign folder = photo.path | remove: photo.name -%}
+  {%- if folder == '/assets/gallery/' -%}
+    {%- assign ext = photo.extname | downcase -%}
+    {%- if ext == '.jpg' or ext == '.jpeg' or ext == '.png' or ext == '.webp' -%}
+      {%- assign stem = photo.name | split: '.' | first -%}
+      {%- assign pieces = stem | split: '_' -%}
+      {%- assign base = pieces | first -%}
+      {%- assign main_no = base | plus: 0 -%}
+      {%- if base.size == 3 and main_no >= 1 and main_no <= 99 and pieces.size <= 2 -%}
+        {%- assign suffix_no = 0 -%}
+        {%- assign accepted = true -%}
+        {%- if pieces.size == 2 -%}
+          {%- assign suffix = pieces | last -%}
+          {%- assign suffix_no = suffix | plus: 0 -%}
+          {%- if suffix_no < 1 or suffix.size > 8 -%}
+            {%- assign accepted = false -%}
+          {%- endif -%}
+        {%- endif -%}
+        {%- if accepted -%}
+          {%- assign suffix_key = suffix_no | prepend: '00000000' | slice: -8, 8 -%}
+          {%- capture entry -%}{{ base }}_{{ suffix_key }}|assets/gallery/{{ photo.name }}|{{ stem }}{%- endcapture -%}
+          {%- assign serialized = serialized | append: entry | append: '~' -%}
+        {%- endif -%}
+      {%- endif -%}
+    {%- endif -%}
+  {%- endif -%}
+{%- endfor -%}
+{%- assign sorted = serialized | split: '~' | sort -%}
+{
+  "photos": [
+  {%- assign separator = '' -%}
+  {%- for item in sorted -%}
+    {%- if item != '' -%}
+      {%- assign fields = item | split: '|' -%}
+      {{- separator -}}{"src":{{ fields[1] | jsonify }},"alt":{{ fields[2] | prepend: '갤러리 사진 ' | jsonify }}}
+      {%- assign separator = ',' -%}
+    {%- endif -%}
+  {%- endfor -%}
+  ]
+}
