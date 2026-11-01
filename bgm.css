@@ -1,0 +1,4 @@
+/* 배경음악 버튼만 추가하며 기존 청첩장 레이아웃은 변경하지 않습니다. */
+.bgm-toggle{position:fixed;right:16px;top:max(18px,env(safe-area-inset-top));z-index:1200;min-width:78px;padding:9px 12px;border:1px solid #6c7651;border-radius:20px;background:#fff;color:#455239;font:12px/1.2 sans-serif;box-shadow:0 2px 8px #0002;cursor:pointer;touch-action:manipulation}
+.bgm-toggle.is-playing{background:#6c7651;color:#fff}
+.bgm-toggle:focus-visible{outline:2px solid #222;outline-offset:3px}
