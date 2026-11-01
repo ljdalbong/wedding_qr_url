@@ -1,5 +1,5 @@
 # 목적: 현재 청첩장 표지를 공유용 작은 이미지로 자동 생성합니다.
-# 기능: cover-config.json의 사진을 읽고 1200x630 JPEG로 축소하며 OG 이미지 캐시 버전을 동기화합니다.
+# 기능: cover-config.json의 사진을 1200x630 비율에 맞춰 여백 없이 잘라내고 OG 이미지 캐시 버전을 동기화합니다.
 # 변경 범위: assets/social-cover.jpg 및 index.html의 OG 이미지 URL 버전값만 변경합니다.
 # 영향: 일반 페이지 표지·갤러리·캘린더·지도 디자인에는 영향을 주지 않습니다.
 # 보안: 외부 인증정보를 사용하지 않고 GitHub Actions 기본 토큰에만 쓰기 권한을 부여합니다.
@@ -39,15 +39,15 @@ jobs:
           path = (root / cfg['coverImage']).resolve()
           if not path.is_relative_to(root / 'assets') or not path.is_file():
               raise SystemExit('Invalid cover image path')
-          source = path.read_bytes()
-          tag = hashlib.sha256(source).hexdigest()[:12]
+          # 공유 카드 영역을 꽉 채우도록 중앙 기준으로 크롭합니다.
+          # 기존 thumbnail+여백 삽입 방식은 좌우 빈 공간이 생겨 사용하지 않습니다.
           with Image.open(path) as im:
               im = ImageOps.exif_transpose(im).convert('RGB')
-              im.thumbnail((1200, 630), Image.Resampling.LANCZOS)
-              canvas = Image.new('RGB', (1200, 630), '#f5f3ef')
-              canvas.paste(im, ((1200-im.width)//2, (630-im.height)//2))
+              cover = ImageOps.fit(im, (1200, 630), method=Image.Resampling.LANCZOS, centering=(0.5, 0.5))
               dst = root / 'assets/social-cover.jpg'
-              canvas.save(dst, format='JPEG', quality=85, optimize=True, progressive=True)
+              cover.save(dst, format='JPEG', quality=85, optimize=True, progressive=True)
+          # 파일 내용 해시를 버전으로 사용하므로 이미지 생성 규칙만 바뀌어도 캐시 URL이 변경됩니다.
+          tag = hashlib.sha256(dst.read_bytes()).hexdigest()[:12]
           page = root / 'index.html'
           html = page.read_text(encoding='utf-8')
           url = 'https://ljdalbong.github.io/wedding_qr_url/assets/social-cover.jpg?v=' + tag
