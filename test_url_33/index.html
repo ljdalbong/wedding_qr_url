@@ -128,11 +128,11 @@
 @media(max-width:359px){.intro{padding-inline:8px!important}.calendar-section{padding-inline:8%!important}.account-row{gap:8px!important}}
 </style><style>.map-external-fallback{display:inline-block;font:inherit;color:#444;text-underline-offset:3px}.map-fallback{font-family:WeddingSerif,"Nanum Myeongjo",serif}</style><link href="vendor/leaflet.css" rel="stylesheet"/><script defer="" src="vendor/leaflet.js"></script><script defer="" src="map-interaction.js"></script><script defer src="test_url_33/gallery-dynamic.js"></script><script defer src="test_url_33/cover-photo.js"></script><link rel="stylesheet" href="bgm.css"/><script defer src="bgm.js"></script><style id="test33-family-names">
 /* 33차 시험본 전용: 기존 신랑·신부 이름 영역을 부모 성함이 포함된 5열 배치로 대체합니다. */
-.intro .family-names{display:grid;grid-template-columns:minmax(0,.84fr) minmax(0,1.14fr) 20px minmax(0,.94fr) minmax(0,1.06fr);column-gap:3px;align-items:center;max-width:390px;width:100%;margin:0 auto 17px!important;white-space:nowrap;font-family:WeddingSerif,"Nanum Myeongjo",serif;color:inherit}
-/* 부모 성함을 각 칸에서 위아래 두 행으로 표시합니다. */
-.intro .family-parents{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;min-width:0;font-size:11px;line-height:1.4;letter-spacing:0}
-/* 관계와 이름은 한 줄로 표시하며 양쪽 가운데 하트와 높이를 맞춥니다. */
-.intro .family-person{display:flex;flex-wrap:nowrap;align-items:center;justify-content:center;gap:3px;min-width:0}
+.intro .family-names{display:grid;grid-template-columns:minmax(0,.84fr) minmax(0,1.14fr) 20px minmax(0,.94fr) minmax(0,1.06fr);grid-template-rows:48px;column-gap:3px;align-items:center;max-width:390px;width:100%;margin:0 auto 17px!important;white-space:nowrap;font-family:WeddingSerif,"Nanum Myeongjo",serif;color:inherit}
+/* 부모 이름을 동일 높이의 상하 2행에 배치해 좌우 세로 간격을 통일합니다. */
+.intro .family-parents{display:grid;grid-template-rows:1fr 1fr;align-items:center;justify-items:center;row-gap:0;min-width:0;height:100%;font-size:11px;line-height:1.4;letter-spacing:0}
+/* 관계·이름·하트는 부모 두 행의 정중앙에 배치합니다. */
+.intro .family-person{display:flex;flex-wrap:nowrap;align-items:center;justify-content:center;gap:3px;min-width:0;height:100%}
 .intro .family-relation{font-size:10px;letter-spacing:0;flex:none}
 .intro .family-person-name{font-size:17px;letter-spacing:0;flex:none}
 .intro .family-heart{padding:0!important;font-size:16px;text-align:center;letter-spacing:0}
