@@ -132,7 +132,8 @@
 /* 부모 이름을 동일 높이의 상하 2행에 배치해 좌우 세로 간격을 통일합니다. */
 .intro .family-parents{display:grid;grid-template-rows:1fr 1fr;align-items:center;justify-items:center;row-gap:0;min-width:0;height:100%;font-size:11px;line-height:1.4;letter-spacing:0}
 /* 관계·이름·하트는 부모 두 행의 정중앙에 배치합니다. */
-.intro .family-person{display:flex;flex-wrap:nowrap;align-items:center;justify-content:center;gap:3px;min-width:0;height:100%}
+/* 관계(아들/딸)와 신랑·신부 이름을 부모 성함과 동일한 상하 2행에 배치합니다. */
+.intro .family-person{display:grid;grid-template-rows:minmax(0,1fr) minmax(0,1fr);align-items:center;justify-items:center;row-gap:0;min-width:0;height:100%}
 .intro .family-relation{font-size:10px;letter-spacing:0;flex:none}
 .intro .family-person-name{font-size:17px;letter-spacing:0;flex:none}
 .intro .family-heart{padding:0!important;font-size:16px;text-align:center;letter-spacing:0}
